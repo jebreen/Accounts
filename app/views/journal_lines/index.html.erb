@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Journal lines</h1>
+
+<div id="journal_lines">
+  <% @journal_lines.each do |journal_line| %>
+    <%= render journal_line %>
+    <p>
+      <%= link_to "Show this journal line", journal_line %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New journal line", new_journal_line_path %>

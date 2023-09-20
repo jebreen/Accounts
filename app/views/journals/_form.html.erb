@@ -1,0 +1,27 @@
+<%= form_with(model: journal) do |form| %>
+  <% if journal.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(journal.errors.count, "error") %> prohibited this journal from being saved:</h2>
+
+      <ul>
+        <% journal.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :journal_date, style: "display: block" %>
+    <%= form.date_field :journal_date %>
+  </div>
+
+  <div>
+    <%= form.label :journal_narration, style: "display: block" %>
+    <%= form.text_field :journal_narration %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

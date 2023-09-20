@@ -1,0 +1,37 @@
+<%= form_with(model: journal_line) do |form| %>
+  <% if journal_line.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(journal_line.errors.count, "error") %> prohibited this journal_line from being saved:</h2>
+
+      <ul>
+        <% journal_line.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :journal_id_id, style: "display: block" %>
+    <%= form.text_field :journal_id_id %>
+  </div>
+
+  <div>
+    <%= form.label :account_id_id, style: "display: block" %>
+    <%= form.text_field :account_id_id %>
+  </div>
+
+  <div>
+    <%= form.label :debit_cents, style: "display: block" %>
+    <%= form.number_field :debit_cents %>
+  </div>
+
+  <div>
+    <%= form.label :credit_cents, style: "display: block" %>
+    <%= form.number_field :credit_cents %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
