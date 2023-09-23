@@ -17,7 +17,7 @@ class JournalLinesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create journal_line" do
     assert_difference("JournalLine.count") do
-      post journal_lines_url, params: { journal_line: { account_id_id: @journal_line.account_id_id, credit_cents: @journal_line.credit_cents, debit_cents: @journal_line.debit_cents, journal_id_id: @journal_line.journal_id_id } }
+      post journal_lines_url, params: { journal_line: { account_id: @journal_line.account_id, credit_cents: @journal_line.credit_cents, debit_cents: @journal_line.debit_cents, journal_id: @journal_line.journal_id } }
     end
 
     assert_redirected_to journal_line_url(JournalLine.last)
@@ -34,7 +34,7 @@ class JournalLinesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update journal_line" do
-    patch journal_line_url(@journal_line), params: { journal_line: { account_id_id: @journal_line.account_id_id, credit_cents: @journal_line.credit_cents, debit_cents: @journal_line.debit_cents, journal_id_id: @journal_line.journal_id_id } }
+    patch journal_line_url(@journal_line), params: { journal_line: { account_id: @journal_line.account_id, credit_cents: @journal_line.credit_cents, debit_cents: @journal_line.debit_cents, journal_id: @journal_line.journal_id } }
     assert_redirected_to journal_line_url(@journal_line)
   end
 

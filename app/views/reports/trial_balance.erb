@@ -1,0 +1,20 @@
+<h1>Trial Balance</h1>
+<hr/>
+<%= link_to "Back to Reports", reports_path %>
+<hr/>
+<table>
+  <% @accounts.each do |account|%>
+  <tr>
+    <td><%= account.id %></td>
+    <td><%= account.account_name %></td>
+    <td style="text-align: right;"><%= account.balance.debit? ? account.balance.debit.format : "&nbsp;".html_safe %></td>
+    <td style="text-align: right;"><%= account.balance.credit? ? account.balance.credit.format : "&nbsp;".html_safe %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <td>&nbsp;</td>
+    <td style="font-weight: bold">Totals</td>
+    <td style="font-weight: bold; text-align: right;"><%= @debit_total.format %></td>
+    <td style="font-weight: bold; text-align: right;"><%= @credit_total.format %></td>
+  </tr>
+</table>

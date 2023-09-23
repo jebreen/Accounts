@@ -22,6 +22,20 @@
   </div>
 
   <div>
+    <ul>
+      <%= form.fields_for :journal_lines do |lines_form| %>
+        <li>
+          <%= lines_form.label :account_id %>
+          <%= lines_form.collection_select :account_id, Account.order(:account_type, :account_name), :id, :account_name %>
+          <%= lines_form.label :debit %>
+          <%= lines_form.text_field  :debit %>
+          <%= lines_form.label :credit %>
+          <%= lines_form.text_field  :credit %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

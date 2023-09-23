@@ -1,0 +1,86 @@
+<style>
+  td.money { text-align: right; font-family: Monospaced; width: 10%; }
+  td.total { font-weight: bold; }
+</style>
+<h1>Profit &amp; Loss</h1>
+<hr/>
+<table>
+  <tr>
+    <td colspan="4">Trading Income</td>
+  </tr>
+  <% @revenue_accounts.each do |account| %>
+    <tr>
+      <td style="width:5%;">&nbsp;</td>
+      <td><%= account.account_name %></td>
+      <td class="money"><%= account.balance.debit? ? account.balance.debit.format : account.balance.credit.format %>&nbsp;</td>
+      <td class="money"><%= account == @revenue_accounts.last ? @revenue_balance.credit.format : "&nbsp;".html_safe %></td>
+    </tr>
+  <% end %>
+  <% if @cogs_accounts.empty? %>
+    <tr>
+      <td colspan="3">Less Cost of Goods Sold</td>
+      <td class="money"><%= Money.new(0).format %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td colspan="4">Less Cost of Goods Sold</td>
+    </tr>
+    <% @cogs_accounts.each do |account| %>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= account.account_name %></td>
+        <td class="money"><%= account.balance.debit? ? account.balance.debit.format : account.balance.credit.format %>&nbsp;</td>
+        <td class="money"><%= account == @revenue_accounts.last ? @revenue_balance.credit.format : "&nbsp;".html_safe %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td colspan="3" class="total">Gross <%= @gross_profit.credit? ? "Profit" : "Loss" %></td>
+    <td class="money total"><%= @gross_profit.format %></td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+
+  <% if @income_accounts.empty? %>
+    <tr>
+      <td colspan="3">Plus Other Operating Income</td>
+      <td class="money"><%= Money.new(0).format %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td colspan="4">Plus Other Operating Income</td>
+    </tr>
+    <% @income_accounts.each do |account| %>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= account.account_name %></td>
+        <td class="money"><%= account.balance.debit? ? account.balance.debit.format : account.balance.credit.format %>&nbsp;</td>
+        <td class="money"><%= account == @income_accounts.last ? @income_balance.credit.format : "&nbsp;".html_safe %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <% if @expense_accounts.empty? %>
+    <tr>
+      <td colspan="3">Less Operating Expenses</td>
+      <td class="money"><%= Money.new(0).format %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td colspan="4">Less Operating Expenses</td>
+    </tr>
+    <% @expense_accounts.each do |account| %>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= account.account_name %></td>
+        <td class="money"><%= account.balance.debit? ? account.balance.debit.format : account.balance.credit.format %>&nbsp;</td>
+        <td class="money"><%= account == @expense_accounts.last ? @expense_balance.debit.format : "&nbsp;".html_safe %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td colspan="3" class="total">Net <%= @net_profit.debit? ? "Loss" : "Profit" %></td>
+    <td class="money total"><%= @net_profit.format %></td>
+  </tr>
+</table>
+<%= link_to "Back to Reports", reports_path %>

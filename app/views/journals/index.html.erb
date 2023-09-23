@@ -1,14 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Journals</h1>
+<h1>General Journal</h1>
 
 <div id="journals">
-  <% @journals.each do |journal| %>
-    <%= render journal %>
-    <p>
-      <%= link_to "Show this journal", journal %>
-    </p>
-  <% end %>
+  <table>
+    <tr>
+      <td style="width: 5%"></td>
+      <td style="width: 5%"></td>
+      <td style="width: 70%"></td>
+      <td style="width: 10%"></td>
+      <td style="width: 10%"></td>
+    </tr>
+    <% @journals.each do |journal| %>
+      <%= render journal %>
+    <% end %>
+  </table>
 </div>
 
-<%= link_to "New journal", new_journal_path %>
+<%= link_to "New journal", new_journal_path %>&nbsp;|&nbsp;<%= link_to "Accounts", accounts_path %>

@@ -3,7 +3,7 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
     create_table :accounts do |t|
       t.integer :account_type
       t.string :account_name
-      t.boolean :account_contra
+      t.boolean :account_contra, null: false, default: false
 
       t.timestamps
     end

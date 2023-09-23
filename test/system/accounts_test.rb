@@ -14,9 +14,9 @@ class AccountsTest < ApplicationSystemTestCase
     visit accounts_url
     click_on "New account"
 
-    check "Contra" if @account.contra
-    fill_in "Name", with: @account.name
-    fill_in "Type", with: @account.type
+    check "Account contra" if @account.account_contra
+    fill_in "Account name", with: @account.account_name
+    fill_in "Account type", with: @account.account_type
     click_on "Create Account"
 
     assert_text "Account was successfully created"
@@ -27,9 +27,9 @@ class AccountsTest < ApplicationSystemTestCase
     visit account_url(@account)
     click_on "Edit this account", match: :first
 
-    check "Contra" if @account.contra
-    fill_in "Name", with: @account.name
-    fill_in "Type", with: @account.type
+    check "Account contra" if @account.account_contra
+    fill_in "Account name", with: @account.account_name
+    fill_in "Account type", with: @account.account_type
     click_on "Update Account"
 
     assert_text "Account was successfully updated"

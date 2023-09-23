@@ -1,12 +1,14 @@
-<div id="<%= dom_id journal %>">
-  <p>
-    <strong>Journal date:</strong>
-    <%= journal.journal_date %>
-  </p>
+<tr>
+  <td colspan="2"><%= journal.journal_date %></td>
+  <td colspan=3><%= journal.journal_narration %></td>
+</tr>
 
-  <p>
-    <strong>Journal narration:</strong>
-    <%= journal.journal_narration %>
-  </p>
+<% journal.journal_lines.each do |line| %>
+  <tr>
+    <td></td>
+    <td colspan="2"><%= line.account.account_name %></td>
+    <td style="text-align: right; font-family: ui-monospace"><%= line.debit_cents.nil? || line.debit_cents.zero? ? "&nbsp;".html_safe : line.debit.format %></td>
+    <td style="text-align: right; font-family: ui-monospace"><%= line.credit_cents.nil? || line.credit_cents.zero? ? "&nbsp;".html_safe : line.credit.format %></td>
+  </tr>
+<% end %>
 
-</div>

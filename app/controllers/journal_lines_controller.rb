@@ -65,6 +65,6 @@ class JournalLinesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def journal_line_params
-      params.require(:journal_line).permit(:journal_id_id, :account_id_id, :debit_cents, :credit_cents)
+      params.require(:journal_line).permit(:journal_id, :account_id, :debit_cents, :credit_cents)
     end
 end

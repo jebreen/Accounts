@@ -3,7 +3,7 @@ class JournalsController < ApplicationController
 
   # GET /journals or /journals.json
   def index
-    @journals = Journal.all
+    @journals = Journal.order :journal_date, :id
   end
 
   # GET /journals/1 or /journals/1.json
@@ -13,6 +13,7 @@ class JournalsController < ApplicationController
   # GET /journals/new
   def new
     @journal = Journal.new
+    6.times { @journal.journal_lines.build }
   end
 
   # GET /journals/1/edit
@@ -65,6 +66,7 @@ class JournalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def journal_params
-      params.require(:journal).permit(:journal_date, :journal_narration)
+      params.require(:journal).permit(:journal_date, :journal_narration,
+                                      journal_lines_attributes: [:id, :account_id, :debit, :credit] )
     end
 end

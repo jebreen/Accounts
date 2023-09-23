@@ -1,17 +1,11 @@
 <div id="<%= dom_id account %>">
-  <p>
-    <strong>Type:</strong>
-    <%= account.type %>
-  </p>
-
-  <p>
-    <strong>Contra:</strong>
-    <%= account.contra %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= account.name %>
-  </p>
-
+  <tr>
+    <td style ="width: 10%; font-style: italic;"><%= account.id %></td>
+    <td style ="width: 85%; font-style: italic;"><%= account.account_name %></td>
+    <td style ="width: 5%; font-style: italic;">
+      <span style="color: <%= account.account_contra? ? 'green' : 'red' %>">
+        <%= (account.account_contra? ? "&#x2714;" : "&#x2718;").html_safe %>
+      </span>
+    </td>
+  </tr>
 </div>

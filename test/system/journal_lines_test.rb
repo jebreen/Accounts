@@ -14,10 +14,10 @@ class JournalLinesTest < ApplicationSystemTestCase
     visit journal_lines_url
     click_on "New journal line"
 
-    fill_in "Account id", with: @journal_line.account_id_id
+    fill_in "Account", with: @journal_line.account_id
     fill_in "Credit cents", with: @journal_line.credit_cents
     fill_in "Debit cents", with: @journal_line.debit_cents
-    fill_in "Journal id", with: @journal_line.journal_id_id
+    fill_in "Journal", with: @journal_line.journal_id
     click_on "Create Journal line"
 
     assert_text "Journal line was successfully created"
@@ -28,10 +28,10 @@ class JournalLinesTest < ApplicationSystemTestCase
     visit journal_line_url(@journal_line)
     click_on "Edit this journal line", match: :first
 
-    fill_in "Account id", with: @journal_line.account_id_id
+    fill_in "Account", with: @journal_line.account_id
     fill_in "Credit cents", with: @journal_line.credit_cents
     fill_in "Debit cents", with: @journal_line.debit_cents
-    fill_in "Journal id", with: @journal_line.journal_id_id
+    fill_in "Journal", with: @journal_line.journal_id
     click_on "Update Journal line"
 
     assert_text "Journal line was successfully updated"

@@ -1,0 +1,92 @@
+<h1>Balance Sheet</h1>
+<hr/>
+<%= link_to "Back to Reports", reports_path %>
+<hr/>
+<table>
+  <tr>
+    <td colspan="4" style="font-size: large;font-weight: bold;">Assets</td>
+  </tr>
+  <% @asset_accounts.each do |account| %>
+  <tr>
+    <td style="width: 5%;"><%= account.id %></td>
+    <td><%= account.account_name %></td>
+    <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
+    <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+  </tr>
+  <% end %>
+
+  <tr>
+    <td>&nbsp;</td>
+    <td style="font-weight:bold;">Total Assets</td>
+    <td style="font-weight: bold;text-align: right"><%= @asset_balance.debit? ? @asset_balance.format : "&nbsp;".html_safe %></td>
+    <td style="font-weight: bold;text-align: right"><%= @asset_balance.credit? ? @asset_balance.format : "&nbsp;".html_safe %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="font-size: large;font-weight: bold;">Liabilities</td>
+  </tr>
+  <% @liability_accounts.each do |account| %>
+    <tr>
+      <td style="width: 5%;"><%= account.id %></td>
+      <td><%= account.account_name %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td>&nbsp;</td>
+    <td style="font-weight:bold;">Total Liabilities</td>
+    <% if @liability_balance.zero? %>
+      <td style="width:10%;text-align: right;">&nbsp;</td>
+      <td style="width:10%;text-align: right;font-weight: bold"><%= @liability_balance.credit.format %></td>
+    <% else %>
+    <% end %>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="font-weight: bold;">Net <%= @total_assets_liabilities.credit? ? "Liabilities" : "Assets" %></td>
+    <td style="width:10%;text-align: right; font-weight: bold;"><%= @total_assets_liabilities.credit? ? "&nbsp;".html_safe : @total_assets_liabilities.debit.format %>
+    <td style="width:10%;text-align: right; font-weight: bold;"><%= @total_assets_liabilities.credit? ? @total_assets_liabilities.credit.format : "&nbsp;".html_safe %>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan="4" style="font-size: large;font-weight: bold;">Equity</td>
+  </tr>
+  <% @equity_accounts.each do |account| %>
+    <tr>
+      <td style="width: 5%;"><%= account.id %></td>
+      <td><%= account.account_name %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td>&nbsp;</td>
+    <td>Net <%= @profit_loss_balance.credit? ? "Profit" : "Loss" %></td>
+    <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? "&nbsp;".html_safe : @profit_loss_balance.debit.format %></td>
+    <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? @profit_loss_balance.credit.format : "&nbsp;".html_safe %></td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    <td style="font-weight: bold;">Total Equity</td>
+    <td style="font-weight: bold; text-align: right;"><%= @equity_balance.debit? ? @equity_balance.debit.format : "&nbsp;".html_safe %></td>
+    <td style="font-weight: bold; text-align: right;"><%= @equity_balance.credit? ? @equity_balance.credit.format : "&nbsp;".html_safe %></td>
+  </tr>
+</table>

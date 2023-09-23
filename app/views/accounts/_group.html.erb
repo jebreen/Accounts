@@ -1,1 +1,12 @@
 <h2><%= group %></h2>
+<table>
+  <% if Account.where(account_type: group).count == 0 %>
+  <tr>
+    <td>There are no accounts of this type</td>
+  </tr>
+  <% else %>
+    <% Account.where(account_type: group).each do |account| %>
+      <%= render account %>
+    <% end %>
+  <% end %>
+</table>
