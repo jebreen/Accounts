@@ -1,7 +1,8 @@
-<h1>Trial Balance</h1>
+<h1 style="text-align: center;">Trial Balance</h1>
 <hr/>
 <%= link_to "Back to Reports", reports_path %>
 <hr/>
+<%= @params %>
 <table>
   <% @accounts.each do |account|%>
   <tr>

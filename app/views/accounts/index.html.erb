@@ -1,20 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Accounts</h1>
+<h1>Chart of Accounts</h1>
 <hr/>
-<%=link_to "Reports", reports_path %>
+<ul class="menu">
+  <li><%=link_to "General Journal", journals_path %></li>
+  <li><%=link_to "Journal Lines", journal_lines_path %></li>
+  <li><%=link_to "Reports", reports_path %></li>
+  <li><%=link_to "Add an Account", new_account_path %></li>
+</ul>
 <hr/>
 
 <div id="accounts">
   <table>
     <tr>
-      <td>
-  <% Account::account_types.each_key do |group| %>
-    <%= render partial: 'group', locals: {group: group} %>
-  <% end %>
-      </td>
+      <td>id</td>
+      <td>account_name</td>
+      <td>account_type</td>
+      <td style="text-align: right;">account_balance</td>
     </tr>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.id %></td>
+        <td><%= account.account_name %></td>
+        <td><%= account.account_type %></td>
+        <td style="text-align: right"><%= account.balance.format %></td>
+      </tr>
+    <% end %>
   </table>
 </div>
-
-<%= link_to "New account", new_account_path %>

@@ -1,9 +1,17 @@
 <h1>Reports</h1>
 <hr/>
-<ul>
-  <li><%= link_to "Trial Balance", reports_trial_balance_path %></li>
-  <li><%= link_to "Profit & Loss", reports_profit_loss_path %></li>
-  <li><%= link_to "Balance Sheet", reports_balance_sheet_path %></li>
-</ul>
+<%= params %>
+<hr/>
+<%= form_with method: :post do |form| %>
+  <%= form.label :report_date %>
+  <%= form.date_field :report_date %>
+  <%= form.radio_button :report, "trial_balance", checked: 'checked' %>
+  <%= form.label :report_trial_balance, "Trial Balance" %>
+  <%= form.radio_button :report, "profit_loss" %>
+  <%= form.label :report_profit_loss, "Profit and Loss" %>
+  <%= form.radio_button :report, "balance_sheet" %>
+  <%= form.label :report_balance_sheet, "Balance Sheet" %>
+  <%= form.submit "Run Report" %>
+<% end %>
 <hr/>
 <%= link_to "Accounts", accounts_path %>

@@ -1,24 +1,50 @@
 class ReportsController < ApplicationController
+  # GET /reports
   def index
-
+    params.permit!
+    @date = params[:report_date]
   end
 
+  # POST /reports
+  def create
+    params.permit!
+
+    @date = params['report_date'].empty? ? Date.today : Date.parse(params['report_date'])
+
+    case params['report']
+    when 'trial_balance'
+      redirect_to reports_trial_balance_url date: @date
+    end
+  end
+
+  # @todo: balance sheets are produced as at a date.  add date picker/as-at-date functionality
   def balance_sheet
-    @asset_accounts, @asset_balance = group_accounts "Asset"
-    @liability_accounts, @liability_balance = group_accounts "Liability"
-    @equity_accounts, @equity_balance = group_accounts "Equity"
+    @date = Date::today
+    unless params[:date].nil?
+      @date = Date.parse params[:date]
+    end
+
+    @asset_accounts, @asset_balance = group_accounts "Asset", @date
+    @liability_accounts, @liability_balance = group_accounts "Liability", @date
+    @equity_accounts, @equity_balance = group_accounts "Equity", @date
 
     @total_assets_liabilities = Accounts::AccountBalance.new(balance: @asset_balance)
     @total_assets_liabilities.add @liability_balance
 
     @profit_loss_balance = Accounts::AccountBalance.new
     %w[Income Expense Revenue COGS].each do |account_type|
-      Account.where(account_type: account_type).reject { |ac| ac.balance.zero? }.each do |account|
-        @profit_loss_balance.add account.balance
+      Account.where(account_type: account_type).reject { |ac| ac.balance(date: @date).zero? }.each do |account|
+        @profit_loss_balance.add account.balance(date: @date)
       end
     end
 
     @equity_balance.add @profit_loss_balance
+
+    respond_to do |format|
+      format.html {}
+      format.json {}
+      format.pdf  { redirect_to accounts_path }
+    end
   end
 
   def trial_balance
@@ -48,10 +74,10 @@ class ReportsController < ApplicationController
     @net_profit.add @expense_balance
   end
 
-  def group_accounts account_type
-    accounts = Account.where(account_type: account_type).reject { |account| account.balance.zero? }
+  def group_accounts account_type, date
+    accounts = Account.where(account_type: account_type).reject { |account| account.balance(date: date).zero? }
     balance = Accounts::AccountBalance.new
-    accounts.each { |account| balance.add account.balance }
+    accounts.each { |account| balance.add account.balance(date: date) }
     [accounts, balance]
   end
 end

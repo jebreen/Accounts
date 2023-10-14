@@ -1,4 +1,5 @@
-<h1>Balance Sheet</h1>
+<h1 style="text-align: center;">Balance Sheet</h1>
+<h2 style="text-align: center;">As at: <%= @date.strftime "%d %B %Y" %></h2>
 <hr/>
 <%= link_to "Back to Reports", reports_path %>
 <hr/>
@@ -10,8 +11,8 @@
   <tr>
     <td style="width: 5%;"><%= account.id %></td>
     <td><%= account.account_name %></td>
-    <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
-    <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+    <td style="width:10%;text-align: right;"><%= account.balance(date: @date).debit? ? account.balance(date: @date).format : "&nbsp;".html_safe %></td>
+    <td style="width:10%;text-align: right;"><%= account.balance(date: @date).credit? ? account.balance(date: @date).format : "&nbsp;".html_safe %></td>
   </tr>
   <% end %>
 
@@ -22,7 +23,7 @@
     <td style="font-weight: bold;text-align: right"><%= @asset_balance.credit? ? @asset_balance.format : "&nbsp;".html_safe %></td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
   </tr>
   <tr>
     <td colspan="4" style="font-size: large;font-weight: bold;">Liabilities</td>
@@ -31,8 +32,8 @@
     <tr>
       <td style="width: 5%;"><%= account.id %></td>
       <td><%= account.account_name %></td>
-      <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
-      <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance(date: @date).debit? ? account.balance(date: @date).format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance(date: @date).credit? ? account.balance(date: @date).format : "&nbsp;".html_safe %></td>
     </tr>
   <% end %>
 
@@ -43,11 +44,13 @@
       <td style="width:10%;text-align: right;">&nbsp;</td>
       <td style="width:10%;text-align: right;font-weight: bold"><%= @liability_balance.credit.format %></td>
     <% else %>
+      <td style="font-weight: bold;text-align: right"><%= @liability_balance.debit? ? @liability_balance.format : "&nbsp;".html_safe %></td>
+      <td style="font-weight: bold;text-align: right"><%= @liability_balance.credit? ? @liability_balance.format : "&nbsp;".html_safe %></td>
     <% end %>
   </tr>
 
   <tr>
-    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
   </tr>
 
   <tr>
@@ -57,11 +60,11 @@
   </tr>
 
   <tr>
-    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
   </tr>
 
   <tr>
-    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
   </tr>
 
   <tr>
@@ -71,17 +74,19 @@
     <tr>
       <td style="width: 5%;"><%= account.id %></td>
       <td><%= account.account_name %></td>
-      <td style="width:10%;text-align: right;"><%= account.balance.debit? ? account.balance.format : "&nbsp;".html_safe %></td>
-      <td style="width:10%;text-align: right;"><%= account.balance.credit? ? account.balance.format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance(date: @date).debit? ? account(date: @date).balance.format : "&nbsp;".html_safe %></td>
+      <td style="width:10%;text-align: right;"><%= account.balance(date: @date).credit? ? account.balance(date: @date).format : "&nbsp;".html_safe %></td>
     </tr>
   <% end %>
 
-  <tr>
-    <td>&nbsp;</td>
-    <td>Net <%= @profit_loss_balance.credit? ? "Profit" : "Loss" %></td>
-    <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? "&nbsp;".html_safe : @profit_loss_balance.debit.format %></td>
-    <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? @profit_loss_balance.credit.format : "&nbsp;".html_safe %></td>
-  </tr>
+  <% unless @profit_loss_balance.zero? %>
+    <tr>
+      <td>&nbsp;</td>
+      <td>Net <%= @profit_loss_balance.credit? ? "Profit" : "Loss" %></td>
+      <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? "&nbsp;".html_safe : @profit_loss_balance.debit.format %></td>
+      <td style="width:10%;text-align: right;"><%= @profit_loss_balance.credit? ? @profit_loss_balance.credit.format : "&nbsp;".html_safe %></td>
+    </tr>
+  <% end %>
 
   <tr>
     <td>&nbsp;</td>

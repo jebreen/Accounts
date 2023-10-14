@@ -26,7 +26,7 @@ class JournalsController < ApplicationController
 
     respond_to do |format|
       if @journal.save
-        format.html { redirect_to journal_url(@journal), notice: "Journal was successfully created." }
+        format.html { redirect_to journals_url, notice: "Journal was successfully created." }
         format.json { render :show, status: :created, location: @journal }
       else
         format.html { render :new, status: :unprocessable_entity }

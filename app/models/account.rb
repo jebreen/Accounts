@@ -3,7 +3,7 @@ class Account < ApplicationRecord
   has_many :journal_lines
   enum account_type: [:Asset, :Liability, :Equity, :Revenue, :Income, :COGS, :Expense]
 
-  def balance date = Date.today
+  def balance date: Date.today
     result = Accounts::AccountBalance.new
 
     JournalLine.where(account_id: id).joins(:journal).where(journals: {journal_date: ..date }).each do |line|
